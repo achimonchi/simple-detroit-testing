@@ -3,8 +3,8 @@ type: docker
 name: default
 
 steps:
-- name: golang
-  image: alpine
+- name: tests
+  image: golang
   commands:
   - sh test.sh
 
