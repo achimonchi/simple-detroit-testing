@@ -3,8 +3,11 @@ type: docker
 name: default
 
 steps:
-- name: greeting
-  image: alpine
+- name: ping
+  image: golang:alpine
   commands:
-  - echo hello
-  - echo world
+  - redis-cli -h cache ping
+
+services:
+- name: cache
+  image: redis
