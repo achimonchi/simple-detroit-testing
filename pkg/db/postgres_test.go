@@ -9,7 +9,7 @@ import (
 func TestConnectDB(t *testing.T) {
 	db, err := ConnectDB(func() DBConfig {
 		return DBConfig{
-			Host:        "localhost",
+			Host:        "db",
 			Port:        "6432",
 			User:        "noobee",
 			DBName:      "blog",

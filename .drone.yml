@@ -6,6 +6,7 @@ steps:
 - name: tests
   image: golang
   commands:
+  - ping db
   - sh test.sh
 
 services:
