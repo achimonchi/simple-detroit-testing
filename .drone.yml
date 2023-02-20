@@ -3,11 +3,15 @@ type: docker
 name: default
 
 steps:
-- name: ping
-  image: golang:alpine
+- name: tests
+  image: alpine
   commands:
-  - redis-cli -h cache ping
+  - sh test.sh
 
 services:
-- name: cache
-  image: redis
+- name: db
+  image: postgres
+  environtment:
+    POSTGRES_PASSWORD:iniPassword
+    POSTGRES_USER:noobee
+    POSTGRES_DB:blog
