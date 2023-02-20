@@ -3,8 +3,8 @@ type: docker
 name: default
 
 steps:
-- name: test
-  image: gcr.io/library/golang
+- name: greeting
+  image: alpine
   commands:
-  - go build
-  - go test -v
+  - echo hello
+  - echo world
