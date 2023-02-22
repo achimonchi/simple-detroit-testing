@@ -8,7 +8,7 @@ steps:
   depends_on:
     - db
   commands:
-    - sleep 20
+    - while ! pg_isready -U noobee -d detroit ; do sleep 1; done
     - export PGPASSWORD=iniPassword
     - cat docs/schema.sql | psql -d detroit -U noobee -h db
 - name: tests
