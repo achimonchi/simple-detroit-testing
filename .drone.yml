@@ -3,6 +3,13 @@ type: docker
 name: default
 
 steps:
+- name: migrations data
+  image: postgres
+  depends_on:
+    - db
+  commands:
+    # migrate schema to database
+    - cat docs/schema.sql | psql -d detroit -U noobee -h db
 - name: tests
   image: golang
   environment:
@@ -18,8 +25,6 @@ steps:
   depends_on:
     - db
   commands:
-  # migrate schema to database
-  - cat docs/schema.sql | psql -d detroit -U noobee -h db
   - sh test.sh
 
 services:
