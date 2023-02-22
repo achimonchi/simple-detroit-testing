@@ -1,7 +1,6 @@
 package db
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -18,7 +17,6 @@ func TestConnectDB(t *testing.T) {
 			MaxOpenConn: 10,
 		}
 	})
-	fmt.Println(err.Error())
 
 	require.Nil(t, err)
 	require.NotNil(t, db)
