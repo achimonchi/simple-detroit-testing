@@ -20,7 +20,8 @@ services:
 
 trigger:
   ref:
-  - refs/tags/*
+    include:
+    - refs/tags/*
   branch:
   - master
   event:
