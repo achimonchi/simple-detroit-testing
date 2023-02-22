@@ -8,8 +8,8 @@ steps:
   depends_on:
     - db
   commands:
-    - while ! pg_isready -U noobee -d detroit ; do sleep 1; done
     - export PGPASSWORD=iniPassword
+    - while ! pg_isready -U noobee -d detroit -h db ; do sleep 1; done
     - cat docs/schema.sql | psql -d detroit -U noobee -h db
 - name: tests
   image: golang
