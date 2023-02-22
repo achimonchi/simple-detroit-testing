@@ -3,14 +3,6 @@ type: docker
 name: default
 
 steps:
-
-- name: db
-  image: postgres
-  environtment:
-    POSTGRES_PASSWORD:iniPassword
-    POSTGRES_USER:noobee
-    POSTGRES_DB:blog
-
 - name: tests
   image: golang
   depends_on:
@@ -18,13 +10,13 @@ steps:
   commands:
   - sh test.sh
 
-# services:
-# - name: db
-#   image: postgres
-#   environtment:
-#     POSTGRES_PASSWORD:iniPassword
-#     POSTGRES_USER:noobee
-#     POSTGRES_DB:blog
+services:
+- name: db
+  image: postgres
+  environtment:
+    POSTGRES_PASSWORD: iniPassword
+    POSTGRES_USER: noobee
+    POSTGRES_DB: blog
 
 trigger:
   branch:
