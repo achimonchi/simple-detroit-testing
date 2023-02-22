@@ -24,6 +24,7 @@ func (i Infra) RunGin() {
 	v1 := router.Group("v1")
 
 	handler := NewHandler(v1)
+	handler = handler.SetDb(i.db)
 	handler.BuildTodo().Build()
 
 	router.Run(i.port)

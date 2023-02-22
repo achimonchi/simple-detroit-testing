@@ -12,7 +12,6 @@ import (
 type BaseTodoServer struct {
 	router      *gin.RouterGroup
 	todoHandler domainhttp.TodoHandler
-	db          *sql.DB
 }
 
 func NewBaseTodoServer(router *gin.RouterGroup, db *sql.DB) BaseTodoServer {
@@ -28,4 +27,5 @@ func NewBaseTodoServer(router *gin.RouterGroup, db *sql.DB) BaseTodoServer {
 func (b BaseTodoServer) Build() {
 	todo := b.router.Group("todos")
 	todo.GET("/health", b.todoHandler.Health)
+	todo.POST("", b.todoHandler.Create)
 }

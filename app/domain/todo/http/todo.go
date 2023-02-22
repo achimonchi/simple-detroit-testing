@@ -34,4 +34,18 @@ func (t TodoHandler) Create(ctx *gin.Context) {
 		})
 		return
 	}
+
+	newCtx := ctx.Request.Context()
+	if err := t.todoSvc.CreateTodo(newCtx, req); err != nil {
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"message": "BAD_REQUEST",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusCreated, gin.H{
+		"message": "CREATE SUCCESS",
+	})
+
 }
