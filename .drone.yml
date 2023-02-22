@@ -19,7 +19,9 @@ services:
     POSTGRES_DB: blog
 
 trigger:
+  ref:
+  - refs/tags/*
   branch:
-  - develop
+  - master
   event:
   - push
