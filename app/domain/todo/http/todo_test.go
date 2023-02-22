@@ -1,10 +1,13 @@
 package domainhttp
 
 import (
+	"bytes"
+	"detroit-testing/app/domain/todo/params"
 	"detroit-testing/app/domain/todo/repository"
 	"detroit-testing/app/domain/todo/usecase"
 	"detroit-testing/config"
 	"detroit-testing/pkg/db"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -20,7 +23,7 @@ var basePath = "/v1/todos"
 var handler TodoHandler
 
 func init() {
-	err := config.LoadConfig("./.env")
+	err := config.LoadConfig("./../../../../.testing.env")
 	if err != nil {
 		log.Println("Skipped load config from env file")
 	}
@@ -62,4 +65,45 @@ func TestTodoHealthCheck(t *testing.T) {
 	fmt.Printf("Body %v\n", rr.Body.String())
 
 	require.Equal(t, 200, rr.Code)
+}
+
+func TestTodoCreateSuccess(t *testing.T) {
+	req := params.CreateTodoRequest{
+		Name:        "todo test",
+		Description: "from unit test",
+	}
+
+	reqByte, _ := json.Marshal(req)
+	res, err := buildRequest("GET", basePath, reqByte, handler.Create)
+	require.Nil(t, err)
+
+	expected := map[string]interface{}{
+		"message": "CREATE SUCCESS",
+	}
+
+	got := map[string]interface{}{}
+
+	err = json.Unmarshal(res.Body.Bytes(), &got)
+	require.Nil(t, err)
+	require.Equal(t, got["message"], expected["message"])
+
+}
+
+func buildRequest(method, url string, data []byte, handler func(ctx *gin.Context)) (*httptest.ResponseRecorder, error) {
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(data))
+	if err != nil {
+		return nil, err
+	}
+
+	router := gin.Default()
+	router.POST(url, handler)
+
+	rr := httptest.NewRecorder()
+
+	router.ServeHTTP(rr, req)
+	fmt.Printf("%+v\n", rr)
+	fmt.Printf("Body %v\n", rr.Body.String())
+
+	return rr, nil
+
 }
