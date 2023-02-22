@@ -3,17 +3,21 @@ package db
 import (
 	"database/sql"
 	"fmt"
+	"time"
 
 	_ "github.com/lib/pq"
 )
 
 type DBConfig struct {
-	Host        string
-	Port        string
-	User        string
-	Pass        string
-	DBName      string
-	MaxOpenConn int
+	Host            string
+	Port            string
+	User            string
+	Pass            string
+	DBName          string
+	MaxOpenConn     int
+	MaxIdleConn     int
+	MaxIdletimeConn int
+	MaxLifetimeConn int
 }
 
 func ConnectDB(conf func() DBConfig) (*sql.DB, error) {
@@ -29,6 +33,9 @@ func ConnectDB(conf func() DBConfig) (*sql.DB, error) {
 	}
 
 	db.SetMaxOpenConns(dbConf.MaxOpenConn)
+	db.SetMaxIdleConns(dbConf.MaxIdleConn)
+	db.SetConnMaxIdleTime(time.Duration(dbConf.MaxIdletimeConn) * time.Minute)
+	db.SetConnMaxLifetime(time.Duration(dbConf.MaxLifetimeConn) * time.Minute)
 
 	if err := db.Ping(); err != nil {
 		fmt.Sprintln("error:", err.Error())

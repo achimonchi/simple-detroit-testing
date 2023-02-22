@@ -1,16 +1,20 @@
 package infra
 
 import (
+	"database/sql"
+
 	"github.com/gin-gonic/gin"
 )
 
 type Infra struct {
 	port string
+	db   *sql.DB
 }
 
-func NewInfra(port string) Infra {
+func NewInfra(port string, db *sql.DB) Infra {
 	return Infra{
 		port: port,
+		db:   db,
 	}
 }
 
