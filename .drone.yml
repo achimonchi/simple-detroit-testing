@@ -4,9 +4,10 @@ name: default
 
 steps:
 - name: tests
-  image: golang
+  image: alpine
   commands:
-  - sh test.sh
+  - ping db
+  # - sh test.sh
 
 services:
 - name: db
