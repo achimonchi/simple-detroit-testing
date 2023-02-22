@@ -29,7 +29,7 @@ func (t TodoHandler) Create(ctx *gin.Context) {
 
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"message": "BAD_REQUEST",
+			"message": "BAD REQUEST",
 			"error":   err.Error(),
 		})
 		return
@@ -38,7 +38,7 @@ func (t TodoHandler) Create(ctx *gin.Context) {
 	newCtx := ctx.Request.Context()
 	if err := t.todoSvc.CreateTodo(newCtx, req); err != nil {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"message": "BAD_REQUEST",
+			"message": "BAD REQUEST",
 			"error":   err.Error(),
 		})
 		return

@@ -5,6 +5,16 @@ name: default
 steps:
 - name: tests
   image: golang
+  environment:
+    - DB_HOST=db
+    - DB_PORT=5432
+    - DB_USER=noobee
+    - DB_PASS=iniPassword
+    - DB_NAME=detroit
+    - DB_MAX_OPEN_CONN=25
+    - DB_MAX_IDLE_CONN=10
+    - DB_MAX_LIFETIME_CONN=10
+    - DB_MAX_IDLETIME_CONN=10
   depends_on:
     - db
   commands:
@@ -16,7 +26,7 @@ services:
   environment:
     POSTGRES_PASSWORD: iniPassword
     POSTGRES_USER: noobee
-    POSTGRES_DB: blog
+    POSTGRES_DB: detroit
 
 trigger:
   branch:

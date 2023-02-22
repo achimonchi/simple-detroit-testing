@@ -68,24 +68,42 @@ func TestTodoHealthCheck(t *testing.T) {
 }
 
 func TestTodoCreateSuccess(t *testing.T) {
-	req := params.CreateTodoRequest{
-		Name:        "todo test",
-		Description: "from unit test",
-	}
+	t.Run("Success Path", func(t *testing.T) {
+		req := params.CreateTodoRequest{
+			Name:        "todo test",
+			Description: "from unit test",
+		}
 
-	reqByte, _ := json.Marshal(req)
-	res, err := buildRequest("GET", basePath, reqByte, handler.Create)
-	require.Nil(t, err)
+		reqByte, _ := json.Marshal(req)
+		res, err := buildRequest("GET", basePath, reqByte, handler.Create)
+		require.Nil(t, err)
 
-	expected := map[string]interface{}{
-		"message": "CREATE SUCCESS",
-	}
+		expected := map[string]interface{}{
+			"message": "CREATE SUCCESS",
+		}
 
-	got := map[string]interface{}{}
+		got := map[string]interface{}{}
 
-	err = json.Unmarshal(res.Body.Bytes(), &got)
-	require.Nil(t, err)
-	require.Equal(t, got["message"], expected["message"])
+		err = json.Unmarshal(res.Body.Bytes(), &got)
+		require.Nil(t, err)
+		require.Equal(t, got["message"], expected["message"])
+	})
+
+	t.Run("Bad Request - No Request Body", func(t *testing.T) {
+		res, err := buildRequest("GET", basePath, nil, handler.Create)
+		require.Nil(t, err)
+
+		expected := map[string]interface{}{
+			"message": "BAD REQUEST",
+		}
+
+		got := map[string]interface{}{}
+
+		err = json.Unmarshal(res.Body.Bytes(), &got)
+		require.Nil(t, err)
+		require.Equal(t, http.StatusBadRequest, res.Code)
+		require.Equal(t, got["message"], expected["message"])
+	})
 
 }
 
