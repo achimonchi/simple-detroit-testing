@@ -20,3 +20,17 @@ func (t TodoSvc) CreateTodo(ctx context.Context, req params.CreateTodoRequest) e
 	err := t.todoRepo.CreateTodo(ctx, todo)
 	return err
 }
+
+func (t TodoSvc) GetAllTodos(ctx context.Context) (params.GetAllTodosResponse, error) {
+	var resp = params.GetAllTodosResponse{
+		IsNoError: false,
+	}
+	todos, err := t.todoRepo.GetAll(ctx)
+	if err != nil {
+		return resp, err
+	}
+
+	resp.IsNoError = true
+	resp.Todos = todos
+	return resp, nil
+}

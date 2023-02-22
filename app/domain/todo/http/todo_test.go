@@ -107,6 +107,22 @@ func TestTodoCreateSuccess(t *testing.T) {
 
 }
 
+func TestGetAll(t *testing.T) {
+	t.Run("Success", func(t *testing.T) {
+		res, err := buildRequest("GET", basePath, nil, handler.GetAll)
+		require.Nil(t, err)
+		expected := map[string]interface{}{
+			"message": "GET SUCCESS",
+		}
+
+		got := map[string]interface{}{}
+
+		err = json.Unmarshal(res.Body.Bytes(), &got)
+		require.Nil(t, err)
+		require.Equal(t, expected["message"], got["message"])
+	})
+}
+
 func buildRequest(method, url string, data []byte, handler func(ctx *gin.Context)) (*httptest.ResponseRecorder, error) {
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(data))
 	if err != nil {

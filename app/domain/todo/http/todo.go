@@ -37,8 +37,8 @@ func (t TodoHandler) Create(ctx *gin.Context) {
 
 	newCtx := ctx.Request.Context()
 	if err := t.todoSvc.CreateTodo(newCtx, req); err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
-			"message": "BAD REQUEST",
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+			"message": "INTERNAL SERVER ERROR",
 			"error":   err.Error(),
 		})
 		return
@@ -48,4 +48,30 @@ func (t TodoHandler) Create(ctx *gin.Context) {
 		"message": "CREATE SUCCESS",
 	})
 
+}
+
+func (t TodoHandler) GetAll(ctx *gin.Context) {
+	newCtx := ctx.Request.Context()
+
+	resp, err := t.todoSvc.GetAllTodos(newCtx)
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+			"message": "INTERNAL SERVER ERROR",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	if !resp.IsNoError {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+			"message": "INTERNAL SERVER ERROR",
+			"error":   "unknown error",
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"message": "GET SUCCESS",
+		"payload": resp.Todos,
+	})
 }

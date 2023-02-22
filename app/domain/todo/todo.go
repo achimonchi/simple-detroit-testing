@@ -27,5 +27,6 @@ func NewBaseTodoServer(router *gin.RouterGroup, db *sql.DB) BaseTodoServer {
 func (b BaseTodoServer) Build() {
 	todo := b.router.Group("todos")
 	todo.GET("/health", b.todoHandler.Health)
+	todo.GET("", b.todoHandler.GetAll)
 	todo.POST("", b.todoHandler.Create)
 }

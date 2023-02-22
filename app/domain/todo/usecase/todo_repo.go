@@ -10,7 +10,14 @@ type TodoRepo interface {
 	TodoRepoWrite
 }
 
-type TodoRepoRead interface{}
+type TodoRepoRead interface {
+	TodoRepoReadAll
+}
+
+type TodoRepoReadAll interface {
+	GetAll(ctx context.Context) ([]model.Todo, error)
+}
+
 type TodoRepoWrite interface {
 	CreateTodo(ctx context.Context, todo model.Todo) error
 }
