@@ -19,7 +19,7 @@ steps:
     - db
   commands:
   # migrate schema to database
-  - cat docs/schema.sql | docker exec -i noobee psql -d detroit -U noobee
+  - cat docs/schema.sql | psql -d detroit -U noobee -h db
   - sh test.sh
 
 services:
