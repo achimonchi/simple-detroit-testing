@@ -21,6 +21,5 @@ services:
 trigger:
   branch:
   - develop
-  - master
   event:
   - push
