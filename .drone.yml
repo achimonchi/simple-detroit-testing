@@ -28,7 +28,7 @@ services:
     POSTGRES_USER: noobee
     POSTGRES_DB: detroit
   commands:
-    - cat docs/schema.sql | psql -d detroit -U noobee -h db
+    - cat docs/schema.sql | psql -d detroit -U noobee
 
 trigger:
   branch:
