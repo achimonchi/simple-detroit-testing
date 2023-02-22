@@ -4,7 +4,7 @@ name: default
 
 steps:
 - name: tests
-  image: alpine
+  image: golang
   depends_on:
     - db
   commands:
