@@ -3,12 +3,6 @@ type: docker
 name: default
 
 steps:
-- name: db
-  image: postgres
-  environment:
-    POSTGRES_PASSWORD: iniPassword
-    POSTGRES_USER: noobee
-    POSTGRES_DB: detroit
 - name: migration db
   image: postgres
   environment:
@@ -18,6 +12,7 @@ steps:
   depends_on:
     - db
   commands:
+    - sleep 20
     - cat docs/schema.sql | psql -d detroit -U noobee -h db
 - name: tests
   image: golang
@@ -36,6 +31,14 @@ steps:
     - db
   commands:
   - sh test.sh
+
+services:
+- name: db
+  image: postgres
+  environment:
+    POSTGRES_PASSWORD: iniPassword
+    POSTGRES_USER: noobee
+    POSTGRES_DB: detroit
 
 trigger:
   branch:
