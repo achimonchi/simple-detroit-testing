@@ -3,6 +3,12 @@ type: docker
 name: default
 
 steps:
+- name: db
+  image: postgres
+  environment:
+    POSTGRES_PASSWORD: iniPassword
+    POSTGRES_USER: noobee
+    POSTGRES_DB: detroit
 - name: migration db
   image: postgres
   environment:
@@ -30,14 +36,6 @@ steps:
     - db
   commands:
   - sh test.sh
-
-services:
-- name: db
-  image: postgres
-  environment:
-    POSTGRES_PASSWORD: iniPassword
-    POSTGRES_USER: noobee
-    POSTGRES_DB: detroit
 
 trigger:
   branch:
