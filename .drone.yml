@@ -10,7 +10,6 @@ steps:
     POSTGRES_PASSWORD:iniPassword
     POSTGRES_USER:noobee
     POSTGRES_DB:blog
-  detach: true
 
 - name: tests
   image: golang
