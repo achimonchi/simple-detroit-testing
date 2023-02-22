@@ -13,7 +13,7 @@ steps:
 services:
 - name: db
   image: postgres
-  environtment:
+  environment:
     POSTGRES_PASSWORD: iniPassword
     POSTGRES_USER: noobee
     POSTGRES_DB: blog
