@@ -5,14 +5,11 @@ name: default
 steps:
 - name: migration db
   image: postgres
-  environment:
-    POSTGRES_PASSWORD: iniPassword
-    POSTGRES_USER: noobee
-    POSTGRES_DB: detroit
   depends_on:
     - db
   commands:
     - sleep 20
+    - export PGPASSWORD=iniPassword
     - cat docs/schema.sql | psql -d detroit -U noobee -h db
 - name: tests
   image: golang
