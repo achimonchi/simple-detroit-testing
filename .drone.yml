@@ -18,6 +18,8 @@ steps:
   depends_on:
     - db
   commands:
+  # migrate schema to database
+  - cat docs/schema.sql | docker exec -i noobee psql -d detroit -U noobee
   - sh test.sh
 
 services:
