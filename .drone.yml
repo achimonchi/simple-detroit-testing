@@ -5,9 +5,10 @@ name: default
 steps:
 - name: tests
   image: alpine
+  depends_on:
+    - db
   commands:
-  - ping db
-  # - sh test.sh
+  - sh test.sh
 
 services:
 - name: db
@@ -16,3 +17,10 @@ services:
     POSTGRES_PASSWORD:iniPassword
     POSTGRES_USER:noobee
     POSTGRES_DB:blog
+
+trigger:
+  branch:
+  - develop
+  - master
+  event:
+  - push
