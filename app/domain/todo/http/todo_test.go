@@ -8,7 +8,6 @@ import (
 	"detroit-testing/config"
 	"detroit-testing/pkg/db"
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"net/http/httptest"
@@ -61,8 +60,8 @@ func TestTodoHealthCheck(t *testing.T) {
 
 	router.ServeHTTP(rr, req)
 
-	fmt.Printf("%+v\n", rr)
-	fmt.Printf("Body %v\n", rr.Body.String())
+	// fmt.Printf("%+v\n", rr)
+	// fmt.Printf("Body %v\n", rr.Body.String())
 
 	require.Equal(t, 200, rr.Code)
 }
@@ -129,14 +128,14 @@ func buildRequest(method, url string, data []byte, handler func(ctx *gin.Context
 		return nil, err
 	}
 
-	router := gin.Default()
+	router := gin.New()
 	router.POST(url, handler)
 
 	rr := httptest.NewRecorder()
 
 	router.ServeHTTP(rr, req)
-	fmt.Printf("%+v\n", rr)
-	fmt.Printf("Body %v\n", rr.Body.String())
+	// fmt.Printf("%+v\n", rr)
+	// fmt.Printf("Body %v\n", rr.Body.String())
 
 	return rr, nil
 
