@@ -41,7 +41,7 @@ services:
 ---
 kind: pipeline
 type: docker
-name: build image
+name: build-image
 
 steps:
 - name: build
@@ -54,8 +54,30 @@ steps:
     dockerfile: Dockerfile
     repo: achimonchi/detroit-testing
     tags: latest
+
 depends_on:
 - testing
+
+---
+kind: pipeline
+type: docker
+name: deploy-apps
+
+clone:
+  disable: true
+
+steps:
+- name: deploy to server
+  image: plugins/docker
+  settings:
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    repo: achimonchi/detroit-testing
+    tags: latest
+  commands:
+    - docker run -d --name detroit-testing achimonchi/detroit-testing:latest
 
 trigger:
   branch:
