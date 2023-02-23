@@ -52,8 +52,10 @@ steps:
     password:
       from_secret: docker_password
     dockerfile: Dockerfile
-    repo: detroit-test
+    repo: achimonchi/detroit-testing
     tags: latest
+depends_on:
+- testing
 
 trigger:
   branch:
