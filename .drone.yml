@@ -47,13 +47,13 @@ steps:
 - name: build
   image: plugins/docker
   settings:
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
     dockerfile: Dockerfile
     repo: detroit-test
     tags: latest
-  depends_on:
-    - integration-tests
-
-
 
 trigger:
   branch:
