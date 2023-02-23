@@ -30,6 +30,14 @@ steps:
   commands:
     - sh test.sh
 
+services:
+- name: db
+  image: postgres
+  environment:
+    POSTGRES_PASSWORD: iniPassword
+    POSTGRES_USER: noobee
+    POSTGRES_DB: detroit
+
 ---
 kind: pipeline
 type: docker
@@ -45,13 +53,7 @@ steps:
   depends_on:
     - integration-tests
 
-services:
-- name: db
-  image: postgres
-  environment:
-    POSTGRES_PASSWORD: iniPassword
-    POSTGRES_USER: noobee
-    POSTGRES_DB: detroit
+
 
 trigger:
   branch:
