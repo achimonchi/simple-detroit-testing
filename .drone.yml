@@ -27,7 +27,14 @@ steps:
   depends_on:
     - db
   commands:
-  - sh test.sh
+    - sh test.sh
+
+- name: build
+  image: plugins/docker
+  settings:
+    dockerfile: Dockerfile
+  depends_on:
+    - tests
 
 services:
 - name: db
