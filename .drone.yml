@@ -26,7 +26,7 @@ steps:
     DB_MAX_IDLETIME_CONN: 10
     GIN_MODE: release
   depends_on:
-    - db
+    - "migration db"
   commands:
     - sh test.sh
 
