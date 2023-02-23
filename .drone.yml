@@ -68,16 +68,19 @@ clone:
 
 steps:
 - name: deploy to server
-  image: plugins/docker
+  image: appleboy/drone-ssh
   settings:
-    username:
-      from_secret: docker_username
+    host:
+      - 103.76.120.94
+    username: 
+      from_secret: ssh_username
     password:
-      from_secret: docker_password
-    repo: achimonchi/detroit-testing
-    tags: latest
-  commands:
-    - docker run -d --name detroit-testing achimonchi/detroit-testing:latest
+      from_secret: ssh_password
+    port: 22
+    command_timeout: 2m
+    script:
+      - echo "Hello World"
+
 
 trigger:
   branch:
