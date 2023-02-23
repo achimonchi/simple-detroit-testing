@@ -80,7 +80,7 @@ steps:
     command_timeout: 2m
     script:
       - cd apps
-      - docker run -d --name detroit-test --env-file .env achimonchi/detroit-testing
+      - docker run -d --name detroit-test --network=detroit --env-file .env achimonchi/detroit-testing
 
 depends_on:
 - build-image
